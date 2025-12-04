@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Exclude generated code -->
+    <Match>
+        <Class name="~.*\..*_\$.*"/>
+    </Match>
+
+    <!-- Exclude MapStruct generated classes -->
+    <Match>
+        <Class name="~.*MapperImpl"/>
+    </Match>
+
+    <!-- Exclude Lombok generated code -->
+    <Match>
+        <Class name="~.*\$Builder"/>
+    </Match>
+
+    <!-- Exclude Panache generated code -->
+    <Match>
+        <Package name="~.*\.generated\..*"/>
+    </Match>
+
+    <!--
+        Disable EI_EXPOSE_REP for JPA entities in any domain package
+        Rationale: These are internal domain entities managed by Hibernate.
+        External APIs use DTOs mapped via MapStruct, so direct exposure is not a concern.
+
+        This matches any package structure containing "domain"
+    -->
+    <Match>
+        <Package name="~.*\.domain\..*"/>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+    </Match>
+</FindBugsFilter>

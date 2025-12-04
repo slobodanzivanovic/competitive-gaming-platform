@@ -2,8 +2,19 @@ package com.slobodanzivanovic.platform.domain.player;
 
 import com.slobodanzivanovic.platform.domain.auth.PlayerAccount;
 import com.slobodanzivanovic.platform.domain.common.BaseAudit;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
@@ -49,7 +60,8 @@ public class PlayerProfile extends BaseAudit {
 
     private String country;
 
-    // TODO: revisit, do we need this in public data, or we should have account created etc. but we have audit already, anyway revisit
+    // TODO: revisit, do we need this in public data, or we should have account created etc.
+    //  but we have audit already, anyway revisit
     private Instant steamLinkedAt;
 
     // Summary fields for quick loading, calculated/synced from competitive tables

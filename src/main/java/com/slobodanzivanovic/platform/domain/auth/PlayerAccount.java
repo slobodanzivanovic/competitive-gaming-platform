@@ -2,15 +2,23 @@ package com.slobodanzivanovic.platform.domain.auth;
 
 import com.slobodanzivanovic.platform.domain.common.BaseModel;
 import com.slobodanzivanovic.platform.domain.player.PlayerProfile;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 import java.time.LocalDate;
 
 /**
- * Represents the core identity, authentication credentials, and private PII
+ * Represents the core identity, authentication credentials, and private PII.
  *
  * @author Slobodan Zivanovic
  * @since 1.0.0
