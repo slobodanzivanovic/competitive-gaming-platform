@@ -1,9 +1,8 @@
 package com.slobodanzivanovic.platform.domain.auth;
 
 import com.slobodanzivanovic.platform.domain.common.BaseModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.slobodanzivanovic.platform.domain.player.PlayerProfile;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -52,4 +51,7 @@ public class PlayerAccount extends BaseModel {
     private Boolean isBanned = false;
 
     private Instant lastLoginAt;
+
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, optional = false)
+    private PlayerProfile profile;
 }
