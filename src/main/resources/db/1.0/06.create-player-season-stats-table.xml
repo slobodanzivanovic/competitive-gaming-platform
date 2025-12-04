@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-player-season-stats-table" author="slobodan">
+        <createTable tableName="player_season_stats">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="player_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="game_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="season_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="matches_played" type="integer" defaultValueNumeric="0"/>
+            <column name="matches_won" type="integer" defaultValueNumeric="0"/>
+            <column name="total_kills" type="bigint" defaultValueNumeric="0"/>
+            <column name="total_deaths" type="bigint" defaultValueNumeric="0"/>
+            <column name="total_assists" type="bigint" defaultValueNumeric="0"/>
+            <column name="kda_ratio" type="numeric(5,2)" defaultValueNumeric="0.00"/>
+            <column name="win_rate" type="numeric(5,2)" defaultValueNumeric="0.00"/>
+            <column name="created_at" type="timestamp" defaultValueDate="current_timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="version" type="integer"/>
+        </createTable>
+
+        <addUniqueConstraint
+            columnNames="player_id, game_id, season_id"
+            constraintName="uc_player_game_season_stats"
+            tableName="player_season_stats"/>
+
+        <addForeignKeyConstraint
+            baseColumnNames="player_id"
+            baseTableName="player_season_stats"
+            constraintName="fk_stats_player"
+            referencedColumnNames="player_id"
+            referencedTableName="player_profiles"/>
+
+        <addForeignKeyConstraint
+            baseColumnNames="game_id"
+            baseTableName="player_season_stats"
+            constraintName="fk_stats_game"
+            referencedColumnNames="id"
+            referencedTableName="games"/>
+
+        <addForeignKeyConstraint
+            baseColumnNames="season_id"
+            baseTableName="player_season_stats"
+            constraintName="fk_stats_season"
+            referencedColumnNames="id"
+            referencedTableName="seasons"/>
+    </changeSet>
+
+</databaseChangeLog>
