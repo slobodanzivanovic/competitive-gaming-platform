@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-player-profiles-table" author="slobodan">
+        <createTable tableName="player_profiles">
+            <column name="player_id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="steam_id" type="varchar(20)">
+                <constraints unique="true"/>
+            </column>
+            <column name="avatar_url" type="varchar(255)"/>
+            <column name="country" type="varchar(50)"/>
+            <column name="steam_linked_at" type="timestamp"/>
+            <column name="total_matches_played" type="integer" defaultValueNumeric="0"/>
+            <column name="global_kda_ratio" type="numeric(5,2)" defaultValueNumeric="0.00"/>
+            <column name="created_at" type="timestamp" defaultValueDate="current_timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="version" type="integer"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseColumnNames="player_id"
+            baseTableName="player_profiles"
+            constraintName="fk_profile_account"
+            referencedColumnNames="id"
+            referencedTableName="player_accounts"
+            onDelete="CASCADE"
+            validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>
