@@ -9,5 +9,6 @@
     <include file="db/1.0/02.create-player-profiles-table.xml"/>
     <include file="db/1.0/03.create-games-table.xml"/>
     <include file="db/1.0/04.create-seasons-table.xml"/>
+    <include file="db/1.0/05.create-player-ratings-table.xml"/>
 
 </databaseChangeLog>

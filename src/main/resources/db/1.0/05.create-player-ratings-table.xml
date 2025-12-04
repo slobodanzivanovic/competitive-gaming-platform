@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-player-ratings-table" author="slobodan">
+        <createTable tableName="player_ratings">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="player_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="game_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="elo" type="integer" defaultValueNumeric="1000">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating_deviation" type="numeric(5,2)" defaultValueNumeric="350.00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rank_tier" type="varchar(30)" defaultValue="Bronze I">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rank_level" type="integer" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_played_at" type="timestamp"/>
+            <column name="created_at" type="timestamp" defaultValueDate="current_timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+            <column name="version" type="integer"/>
+        </createTable>
+
+        <addUniqueConstraint
+            columnNames="player_id, game_id"
+            constraintName="uc_player_game_rating"
+            tableName="player_ratings"/>
+
+        <addForeignKeyConstraint
+            baseColumnNames="player_id"
+            baseTableName="player_ratings"
+            constraintName="fk_rating_player"
+            referencedColumnNames="player_id"
+            referencedTableName="player_profiles"/>
+
+        <addForeignKeyConstraint
+            baseColumnNames="game_id"
+            baseTableName="player_ratings"
+            constraintName="fk_rating_game"
+            referencedColumnNames="id"
+            referencedTableName="games"/>
+    </changeSet>
+
+</databaseChangeLog>
